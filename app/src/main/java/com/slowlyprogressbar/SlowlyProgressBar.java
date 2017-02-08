@@ -13,6 +13,10 @@ import java.util.List;
  * Created by 林冠宏 on 2016/7/11.
  *
  * 真正的仿微信网页打开的进度条
+ * 
+ * 两种方式
+ *     1，setLayoutParams 的形式
+ *     2，动画形式(推荐)
  *
  * 下面的所有属性都可以自己采用 get set 来自定义
  *
@@ -156,6 +160,51 @@ public class SlowlyProgressBar {
         float density=getDensity(context);
         float num=dip*density+0.5f;
         return (int) num;
+    }
+    
+    /** 获取手机的密度*/
+	public float getDensity(Context context) {
+		DisplayMetrics dm = context.getResources().getDisplayMetrics();
+		return dm.density;
+	}
+    
+    /** 下面是动画的形式 */
+    /**
+     * progressBar 进度缓慢递增，300ms/次
+     */
+    private void startProgressAnimation(int newProgress) {
+        ObjectAnimator animator = ObjectAnimator.ofInt(mProgressBar, "progress", currentProgress, newProgress);
+        animator.setDuration(300);
+        animator.setInterpolator(new DecelerateInterpolator()); /** 减速形式的加速器，个人喜好 */
+        animator.start();
+    }
+    
+    private void startDismissAnimation(final int progress) {
+        ObjectAnimator anim = ObjectAnimator.ofFloat(mProgressBar, "alpha", 1.0f, 0.0f);
+        anim.setDuration(1500);  // 动画时长
+        anim.setInterpolator(new DecelerateInterpolator());     // 减速
+        // 关键, 添加动画进度监听器
+        anim.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+
+            @Override
+            public void onAnimationUpdate(ValueAnimator valueAnimator) {
+                float fraction = valueAnimator.getAnimatedFraction();      // 0.0f ~ 1.0f
+                int offset = 100 - progress;
+                mProgressBar.setProgress((int) (progress + offset * fraction));
+            }
+        });
+
+        anim.addListener(new AnimatorListenerAdapter() {
+
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                // 动画结束
+                mProgressBar.setProgress(0);
+                mProgressBar.setVisibility(View.GONE);
+                isAnimStart = false;
+            }
+        });
+        anim.start();
     }
 }
 
