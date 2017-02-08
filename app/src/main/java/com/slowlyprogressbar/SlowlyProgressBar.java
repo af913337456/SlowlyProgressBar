@@ -78,7 +78,7 @@ public class SlowlyProgressBar {
     }
 
     /** -------------------------------------------第二种方法-------------------------------------- */
-    /** 在 WebViewClient onProgressStart 调用 */
+    /** 在 WebViewClient onPageStarted 调用 */
     public void onProgressStart(){
         progressBar.setVisibility(View.VISIBLE);
         progressBar.setAlpha(1.0f);
