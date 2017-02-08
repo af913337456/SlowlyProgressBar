@@ -140,6 +140,7 @@ public class SlowlyProgressBar {
             speedTime = 9; /** 控制最大倍率 */
         }
         /** 乘 3 是纠正误差 */
+        /** 原因是：px 和 db 不是对比的，个人十分建议不乘3，采用函数适配转换，下面提供个函数 */
         progress = (record * speedTime);
         /** 纠正 */
         if(progress >= lastWidth){
@@ -148,6 +149,13 @@ public class SlowlyProgressBar {
             Log.d("zzzzz","hit "+progress+"---"+lastWidth);
         }
         record ++;
+    }
+    
+    /** 个人可以用个替换 height*3 */
+    public int dip2px(Context context,int dip){
+        float density=getDensity(context);
+        float num=dip*density+0.5f;
+        return (int) num;
     }
 }
 
