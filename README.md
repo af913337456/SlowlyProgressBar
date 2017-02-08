@@ -3,6 +3,8 @@
 ###功能(Function)
 <pre>
 &emsp;&emsp;1.模仿微信网页加载时，顶部进度条的效果。
+&emsp;&emsp;&emsp;第一种方法是移动布局；
+&emsp;&emsp;&emsp;第二种方法是采用动画；
 </pre>
 
 ###怎样使用(How to use)
