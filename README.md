@@ -37,6 +37,36 @@ public class MainActivity extends AppCompatActivity {
             }
 
         });
+        
+        /** 第二种动画模式，建议使用更加平滑，，another */
+        /**
+        slowlyProgressBar =
+                new SlowlyProgressBar
+                        (
+                                findViewById(R.id.p)
+                        );
+        webView.setWebViewClient(new WebViewClient() {
+
+            @Override
+            public void onPageStarted(WebView view, String url, Bitmap favicon) {
+                slowlyProgressBar.onProgressStart();
+            }
+
+            @Override
+            public boolean shouldOverrideUrlLoading(WebView view, WebResourceRequest request) {
+                return true;
+            }
+        });
+
+        webView.setWebChromeClient(new WebChromeClient() {
+
+            @Override
+            public void onProgressChanged(WebView view, int newProgress) {
+                slowlyProgressBar.onProgressChange(newProgress);
+            }
+        });
+        */
+        
         webView.loadUrl("http://www.cnblogs.com/linguanh");
     }
 
