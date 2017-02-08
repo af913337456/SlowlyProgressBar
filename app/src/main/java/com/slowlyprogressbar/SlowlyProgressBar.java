@@ -28,6 +28,7 @@ public class SlowlyProgressBar {
 
     private Handler handler;
     private View view;
+    private ProgressBar progressBar;
 
     /** 当前的位移距离和速度 */
     private int thisWidth = 0;
@@ -47,10 +48,16 @@ public class SlowlyProgressBar {
     private List<Integer> progressQuery = new ArrayList<>();
     private List<Integer> speedQuery    = new ArrayList<>();
 
+    /** 第一种 */
     public SlowlyProgressBar(View view, int phoneWidth) {
         initHandler();
         this.phoneWidth = phoneWidth;
         this.view = view;
+    }
+
+    /** 第二种 */
+    public SlowlyProgressBar(ProgressBar progressBar) {
+        this.progressBar = progressBar;
     }
 
     /** 善后工作，释放引用的持有，方能 gc 生效 */
@@ -64,9 +71,36 @@ public class SlowlyProgressBar {
             speedQuery = null;
         }
         view = null;
-        handler.removeCallbacksAndMessages(null);
-        handler = null;
+        if(handler!=null){
+            handler.removeCallbacksAndMessages(null);
+            handler = null;
+        }
     }
+
+    /** -------------------------------------------第二种方法-------------------------------------- */
+    /** 在 WebViewClient onProgressStart 调用 */
+    public void onProgressStart(){
+        progressBar.setVisibility(View.VISIBLE);
+        progressBar.setAlpha(1.0f);
+    }
+
+    /** 在 WebChromeClient onProgressChange 调用 */
+    public void onProgressChange(
+            int newProgress
+    ){
+        int currentProgress = progressBar.getProgress();
+        if (newProgress >= 100 && !isStart) {
+            /** 防止调用多次动画 */
+            isStart = true;
+            progressBar.setProgress(newProgress);
+            /** 开启属性动画让进度条平滑消失*/
+            startDismissAnimation(progressBar.getProgress());
+        } else {
+            /** 开启属性动画让进度条平滑递增 */
+            startProgressAnimation(newProgress,currentProgress);
+        }
+    }
+    /** -------------------------------第二种结束---------------------------- */
 
     public void setProgress(int progress){
         if(progress>100 || progress <= 0){ /** 不能超过100 */
@@ -154,43 +188,37 @@ public class SlowlyProgressBar {
         }
         record ++;
     }
-    
+
     /** 个人可以用个替换 height*3 */
-    public int dip2px(Context context,int dip){
+    public int dip2px(Context context, int dip){
         float density=getDensity(context);
         float num=dip*density+0.5f;
         return (int) num;
     }
-    
-    /** 获取手机的密度*/
-	public float getDensity(Context context) {
-		DisplayMetrics dm = context.getResources().getDisplayMetrics();
-		return dm.density;
-	}
-    
+
     /** 下面是动画的形式 */
     /**
      * progressBar 进度缓慢递增，300ms/次
      */
-    private void startProgressAnimation(int newProgress) {
-        ObjectAnimator animator = ObjectAnimator.ofInt(mProgressBar, "progress", currentProgress, newProgress);
+    private void startProgressAnimation(int newProgress,int currentProgress) {
+        ObjectAnimator animator = ObjectAnimator.ofInt(progressBar, "progress", currentProgress, newProgress);
         animator.setDuration(300);
         animator.setInterpolator(new DecelerateInterpolator()); /** 减速形式的加速器，个人喜好 */
         animator.start();
     }
-    
+
     private void startDismissAnimation(final int progress) {
-        ObjectAnimator anim = ObjectAnimator.ofFloat(mProgressBar, "alpha", 1.0f, 0.0f);
+        ObjectAnimator anim = ObjectAnimator.ofFloat(progressBar, "alpha", 1.0f, 0.0f);
         anim.setDuration(1500);  // 动画时长
         anim.setInterpolator(new DecelerateInterpolator());     // 减速
-        // 关键, 添加动画进度监听器
+
         anim.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
 
             @Override
             public void onAnimationUpdate(ValueAnimator valueAnimator) {
                 float fraction = valueAnimator.getAnimatedFraction();      // 0.0f ~ 1.0f
                 int offset = 100 - progress;
-                mProgressBar.setProgress((int) (progress + offset * fraction));
+                progressBar.setProgress((int) (progress + offset * fraction));
             }
         });
 
@@ -198,14 +226,14 @@ public class SlowlyProgressBar {
 
             @Override
             public void onAnimationEnd(Animator animation) {
-                // 动画结束
-                mProgressBar.setProgress(0);
-                mProgressBar.setVisibility(View.GONE);
-                isAnimStart = false;
+                progressBar.setProgress(0);
+                progressBar.setVisibility(View.GONE);
+                isStart = false;
             }
         });
         anim.start();
     }
+    
 }
 
 
