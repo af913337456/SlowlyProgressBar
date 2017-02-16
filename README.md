@@ -1,11 +1,26 @@
 # SlowlyProgressBar
 
+<pre>
+
+  Created by 林冠宏（指尖下的幽灵）.
+ 
+  Blog : http://www.cnblogs.com/linguanh/;
+  
+</pre>
+
 ###功能(Function)
 <pre>
-&emsp;&emsp;1.模仿微信网页加载时，顶部进度条的效果。
-&emsp;&emsp;&emsp;第一种方法是移动布局；
-&emsp;&emsp;&emsp;第二种方法是采用动画；
+<strong>&emsp;&emsp;1.模仿微信网页加载时，顶部进度条的效果。</strong>
+
+<strong>&emsp;&emsp;&emsp;第一种方法是移动布局；</strong>
+
+<strong>&emsp;&emsp;&emsp;第二种方法是采用动画；</strong>
+
 </pre>
+
+# 截图
+<img src="http://images2015.cnblogs.com/blog/690927/201607/690927-20160713120539779-1126600882.jpg" width = "400" height = "650" alt=""/>
+<img src="http://images2015.cnblogs.com/blog/690927/201607/690927-20160713120626857-1886584200.jpg" width = "400" height = "650" alt=""/>
 
 ###怎样使用(How to use)
 
