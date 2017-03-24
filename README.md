@@ -8,7 +8,7 @@
   
 </pre>
 
-###功能(Function)
+### 功能(Function)
 <pre>
 <strong>&emsp;&emsp;1.模仿微信网页加载时，顶部进度条的效果。</strong>
 
@@ -22,7 +22,7 @@
 <img src="http://images2015.cnblogs.com/blog/690927/201607/690927-20160713120539779-1126600882.jpg" width = "400" height = "650" alt=""/>
 <img src="http://images2015.cnblogs.com/blog/690927/201607/690927-20160713120626857-1886584200.jpg" width = "400" height = "650" alt=""/>
 
-###怎样使用(How to use)
+### 怎样使用(How to use)
 
 >使用方法</br>
 
