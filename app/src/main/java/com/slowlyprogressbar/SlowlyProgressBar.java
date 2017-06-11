@@ -1,9 +1,15 @@
 package com.slowlyprogressbar;
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
+import android.animation.ObjectAnimator;
+import android.animation.ValueAnimator;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
 import android.view.View;
+import android.view.animation.DecelerateInterpolator;
+import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 
 import java.util.ArrayList;
@@ -187,13 +193,6 @@ public class SlowlyProgressBar {
             Log.d("zzzzz","hit "+progress+"---"+lastWidth);
         }
         record ++;
-    }
-
-    /** 个人可以用个替换 height*3 */
-    public int dip2px(Context context, int dip){
-        float density=getDensity(context);
-        float num=dip*density+0.5f;
-        return (int) num;
     }
 
     /** 下面是动画的形式 */

@@ -1,9 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.slowlyprogressbar.MainActivity">
+
+    <TextView
+        android:id="@+id/reset"
+        android:gravity="center"
+        android:text="点击我重置(click me to reset)"
+        android:layout_width="match_parent"
+        android:layout_height="30dp" />
 
     <TextView
         android:id="@+id/p"
@@ -12,6 +20,14 @@
         android:background="#4fd922"
         android:text="" />
 
+    <ProgressBar
+        android:id="@+id/ProgressBar"
+        style="@style/Base.Widget.AppCompat.ProgressBar.Horizontal"
+        android:layout_width="match_parent"
+        android:progressDrawable="@drawable/progress_bg"
+        android:layout_height="3dp"
+        />
+
     <WebView
         android:id="@+id/webview"
         android:layout_below="@+id/p"
@@ -19,4 +35,4 @@
         android:layout_height="match_parent">
 
     </WebView>
-</RelativeLayout>
+</LinearLayout>
